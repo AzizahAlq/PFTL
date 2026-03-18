@@ -1,8 +1,6 @@
 #!/usr/bin/env python3.10
 # ============================================================
-# client6_IDAD_PTFL_intelligent_v2_fixed_sync.py
-# Fixed to match stable strict-barrier behavior of client5
-# CNN architecture is unchanged
+# client6_IDAD_PTFL_intelligent_v2_sync.py
 # ============================================================
 
 import os
