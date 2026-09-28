@@ -242,8 +242,8 @@ The current adaptive configuration uses:
 γ_global_init = 0.50
 γ_local_init  = 0.50
 
-η       = 0.08
-τ       = 0.02
+η       = 0.05
+τ       = 0.05
 γ_min   = 0.10
 γ_max   = 0.90
 ε       = 0.001
@@ -332,17 +332,13 @@ PFTL/
 │   │   ├── fedclassavg/
 │   │   ├── fedper/
 │   │   └── fedrep/
-│   └── experiments/
+│  
 │
 ├── phase_two/
 │   ├── pftl/
-│   │   └── core/
+│   │   └── core/ static_vs_adaptive
 │   ├── baselines/
-│   │   └── fedproto/
-│   │       ├── experiment_1/
-│   │       └── experiment_2/
-│   ├── experiments/
-│   │   └── static_vs_adaptive/
+│   │── Standalone
 │   ├── FedProto_experiment1/
 │   └── FedProtoVsPFTL_experiment2/
 │
@@ -353,14 +349,7 @@ PFTL/
 ├── scalability/
 │
 ├── statistical_analysis/
-│
-├── results/
-│   ├── phase_one/
-│   ├── phase_two/
-│   ├── scalability/
-│   └── unseen_client/
-│
-└── utils/
+
 ```
 
 ---
