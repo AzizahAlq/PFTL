@@ -1,0 +1,33 @@
+\begin{table*}[!t]
+\centering
+\small
+\caption{System-level scalability of adaptive PFTL with increasing numbers of participating clients. Shared exchange represents the direct shared-layer upload and download, while application traffic includes synchronization polling. RPC time is the combined upload and polling RPC time. Results are averaged across clients, rounds, and available seeds.}
+\label{tab:system_scalability}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{cccccccc}
+\toprule
+\textbf{Clients}
+& \textbf{Shared Exchange}
+& \textbf{App.\ Traffic}
+& \textbf{RPC}
+& \textbf{Sync.}
+& \textbf{Training}
+& \textbf{Round}
+& \textbf{Total} \\
+
+& \textbf{(B/client/round)}
+& \textbf{(B/client/round)}
+& \textbf{(s)}
+& \textbf{(s)}
+& \textbf{(s)}
+& \textbf{(s)}
+& \textbf{(s)} \\
+\midrule
+6 & 1,404 & 10,495 & 0.061 & 13.007 & 21.919 & 37.337 & 749.647 \\
+12 & 1,404 & 14,771 & 0.109 & 19.147 & 37.593 & 60.695 & 1220.000 \\
+30 & 1,404 & 32,431 & 0.348 & 44.549 & 106.274 & 161.197 & 3236.154 \\
+60 & 1,404 & 61,467 & 1.266 & 86.876 & 234.295 & 343.224 & 6889.431 \\
+90 & 1,404 & 100,330 & 3.398 & 144.474 & 361.704 & 540.284 & 10852.045 \\
+\bottomrule
+\end{tabular}
+\end{table*}

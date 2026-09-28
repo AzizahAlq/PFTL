@@ -1,0 +1,35 @@
+\begin{table*}[!t]
+\centering
+\small
+\caption{Combined system and convergence scalability of adaptive PFTL. Communication denotes mean application-layer traffic per client per round.}
+\label{tab:combined_scalability}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{ccccccccc}
+\toprule
+\textbf{Clients}
+& \textbf{Comm.}
+& \textbf{RPC}
+& \textbf{Sync.}
+& \textbf{Round}
+& \textbf{Total}
+& \textbf{Conv.}
+& \textbf{Final F1}
+& \textbf{Accept.} \\
+
+& \textbf{(B/client/round)}
+& \textbf{(s)}
+& \textbf{(s)}
+& \textbf{(s)}
+& \textbf{(s)}
+& \textbf{(round)}
+&
+& \textbf{(\%)} \\
+\midrule
+6 & 10,495 & 0.061 & 13.007 & 37.337 & 749.647 & 14.0 & 0.4918 & 39.2 \\
+12 & 14,771 & 0.109 & 19.147 & 60.695 & 1220.000 & 13.9 & 0.4840 & 32.1 \\
+30 & 32,431 & 0.348 & 44.549 & 161.197 & 3236.154 & 14.7 & 0.4678 & 35.0 \\
+60 & 61,467 & 1.266 & 86.876 & 343.224 & 6889.431 & 15.0 & 0.4653 & 36.7 \\
+90 & 100,330 & 3.398 & 144.474 & 540.284 & 10852.045 & 14.1 & 0.4681 & 29.4 \\
+\bottomrule
+\end{tabular}
+\end{table*}

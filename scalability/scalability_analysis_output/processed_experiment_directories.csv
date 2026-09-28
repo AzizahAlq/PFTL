@@ -1,0 +1,6 @@
+clients,seed,directory,communication_rows,scalability_rows,convergence_rows,stage_metrics_rows,partition_rows,communication_clients,scalability_clients,convergence_clients,metrics_clients
+6,123,/nfs/aalqahtani/PFTL_Multi_class/M_PFTL_codes/scalability_logs/clients_6_fullsize_noniid_alpha_0.3_seed_123,120,120,120,354,94,6,6,6,6
+12,123,/nfs/aalqahtani/PFTL_Multi_class/M_PFTL_codes/scalability_logs/clients_12_fullsize_noniid_alpha_0.3_seed_123,240,240,240,708,188,12,12,12,12
+30,123,/nfs/aalqahtani/PFTL_Multi_class/M_PFTL_codes/scalability_logs/clients_30_fullsize_noniid_alpha_0.3_seed_123,600,600,600,1770,470,30,30,30,30
+60,123,/nfs/aalqahtani/PFTL_Multi_class/M_PFTL_codes/scalability_logs/clients_60_fullsize_noniid_alpha_0.3_seed_123,1200,1200,1200,3540,940,60,60,60,60
+90,123,/nfs/aalqahtani/PFTL_Multi_class/M_PFTL_codes/scalability_logs/clients_90_fullsize_noniid_alpha_0.3_seed_123,1800,1800,1800,5312,1410,90,90,90,90
