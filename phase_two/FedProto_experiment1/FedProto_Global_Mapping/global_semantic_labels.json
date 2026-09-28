@@ -1,0 +1,352 @@
+{
+  "description": "Global semantic label dictionary for the six-client FedProto heterogeneous multi-class IDS experiment.",
+  "number_of_clients": 6,
+  "number_of_global_classes": 61,
+  "number_of_shared_classes": 22,
+  "number_of_single_client_classes": 39,
+  "id_assignment_rule": "BENIGN receives global ID 0; all remaining semantic labels are sorted alphabetically.",
+  "semantic_to_global_id": {
+    "BENIGN": 0,
+    "BACKDOOR": 1,
+    "BACKDOOR_MALWARE": 2,
+    "BOT": 3,
+    "BROWSER_HIJACKING": 4,
+    "COMMAND_INJECTION": 5,
+    "DDOS": 6,
+    "DDOS_ACK_FRAGMENTATION": 7,
+    "DDOS_HTTP_FLOOD": 8,
+    "DDOS_ICMP_FLOOD": 9,
+    "DDOS_ICMP_FRAGMENTATION": 10,
+    "DDOS_PSHACK_FLOOD": 11,
+    "DDOS_RSTFIN_FLOOD": 12,
+    "DDOS_SLOWLORIS": 13,
+    "DDOS_SYNONYMOUS_IP_FLOOD": 14,
+    "DDOS_SYN_FLOOD": 15,
+    "DDOS_TCP_FLOOD": 16,
+    "DDOS_UDP_FLOOD": 17,
+    "DDOS_UDP_FRAGMENTATION": 18,
+    "DICTIONARY_BRUTE_FORCE": 19,
+    "DNS_SPOOFING": 20,
+    "DOS": 21,
+    "DOS_GOLDENEYE": 22,
+    "DOS_HTTP_FLOOD": 23,
+    "DOS_HULK": 24,
+    "DOS_ICMP_FLOOD": 25,
+    "DOS_SLOWHTTPTEST": 26,
+    "DOS_SLOWLORIS": 27,
+    "DOS_SYN_FLOOD": 28,
+    "DOS_TCP_FLOOD": 29,
+    "DOS_UDP_FLOOD": 30,
+    "EXPLOITS": 31,
+    "FTP_PATATOR": 32,
+    "FUZZERS": 33,
+    "GENERIC": 34,
+    "HEARTBLEED": 35,
+    "INJECTION": 36,
+    "MIRAI_GREETH_FLOOD": 37,
+    "MIRAI_GREIP_FLOOD": 38,
+    "MIRAI_UDP_PLAIN": 39,
+    "MITM": 40,
+    "MITM_ARP_SPOOFING": 41,
+    "MQTT_DDOS_PUBLISH_FLOOD": 42,
+    "MQTT_DOS_CONNECT_FLOOD": 43,
+    "MQTT_DOS_PUBLISH_FLOOD": 44,
+    "MQTT_MALFORMED": 45,
+    "PASSWORD": 46,
+    "PORT_SCAN": 47,
+    "RANSOMWARE": 48,
+    "RECONNAISSANCE": 49,
+    "RECON_HOST_DISCOVERY": 50,
+    "RECON_OS_SCAN": 51,
+    "RECON_PING_SWEEP": 52,
+    "RECON_PORT_SCAN": 53,
+    "SCANNING": 54,
+    "SQL_INJECTION": 55,
+    "SSH_PATATOR": 56,
+    "UPLOADING_ATTACK": 57,
+    "VULNERABILITY_SCAN": 58,
+    "WEB_BRUTE_FORCE": 59,
+    "XSS": 60
+  },
+  "global_id_to_semantic": {
+    "0": "BENIGN",
+    "1": "BACKDOOR",
+    "2": "BACKDOOR_MALWARE",
+    "3": "BOT",
+    "4": "BROWSER_HIJACKING",
+    "5": "COMMAND_INJECTION",
+    "6": "DDOS",
+    "7": "DDOS_ACK_FRAGMENTATION",
+    "8": "DDOS_HTTP_FLOOD",
+    "9": "DDOS_ICMP_FLOOD",
+    "10": "DDOS_ICMP_FRAGMENTATION",
+    "11": "DDOS_PSHACK_FLOOD",
+    "12": "DDOS_RSTFIN_FLOOD",
+    "13": "DDOS_SLOWLORIS",
+    "14": "DDOS_SYNONYMOUS_IP_FLOOD",
+    "15": "DDOS_SYN_FLOOD",
+    "16": "DDOS_TCP_FLOOD",
+    "17": "DDOS_UDP_FLOOD",
+    "18": "DDOS_UDP_FRAGMENTATION",
+    "19": "DICTIONARY_BRUTE_FORCE",
+    "20": "DNS_SPOOFING",
+    "21": "DOS",
+    "22": "DOS_GOLDENEYE",
+    "23": "DOS_HTTP_FLOOD",
+    "24": "DOS_HULK",
+    "25": "DOS_ICMP_FLOOD",
+    "26": "DOS_SLOWHTTPTEST",
+    "27": "DOS_SLOWLORIS",
+    "28": "DOS_SYN_FLOOD",
+    "29": "DOS_TCP_FLOOD",
+    "30": "DOS_UDP_FLOOD",
+    "31": "EXPLOITS",
+    "32": "FTP_PATATOR",
+    "33": "FUZZERS",
+    "34": "GENERIC",
+    "35": "HEARTBLEED",
+    "36": "INJECTION",
+    "37": "MIRAI_GREETH_FLOOD",
+    "38": "MIRAI_GREIP_FLOOD",
+    "39": "MIRAI_UDP_PLAIN",
+    "40": "MITM",
+    "41": "MITM_ARP_SPOOFING",
+    "42": "MQTT_DDOS_PUBLISH_FLOOD",
+    "43": "MQTT_DOS_CONNECT_FLOOD",
+    "44": "MQTT_DOS_PUBLISH_FLOOD",
+    "45": "MQTT_MALFORMED",
+    "46": "PASSWORD",
+    "47": "PORT_SCAN",
+    "48": "RANSOMWARE",
+    "49": "RECONNAISSANCE",
+    "50": "RECON_HOST_DISCOVERY",
+    "51": "RECON_OS_SCAN",
+    "52": "RECON_PING_SWEEP",
+    "53": "RECON_PORT_SCAN",
+    "54": "SCANNING",
+    "55": "SQL_INJECTION",
+    "56": "SSH_PATATOR",
+    "57": "UPLOADING_ATTACK",
+    "58": "VULNERABILITY_SCAN",
+    "59": "WEB_BRUTE_FORCE",
+    "60": "XSS"
+  },
+  "semantic_label_clients": {
+    "BACKDOOR": [
+      "client1"
+    ],
+    "BENIGN": [
+      "client1",
+      "client2",
+      "client3",
+      "client4",
+      "client5",
+      "client6"
+    ],
+    "DDOS": [
+      "client1",
+      "client4"
+    ],
+    "DOS": [
+      "client1",
+      "client3"
+    ],
+    "INJECTION": [
+      "client1"
+    ],
+    "MITM": [
+      "client1"
+    ],
+    "PASSWORD": [
+      "client1"
+    ],
+    "RANSOMWARE": [
+      "client1"
+    ],
+    "SCANNING": [
+      "client1"
+    ],
+    "XSS": [
+      "client1",
+      "client2",
+      "client4",
+      "client6"
+    ],
+    "BACKDOOR_MALWARE": [
+      "client2"
+    ],
+    "BROWSER_HIJACKING": [
+      "client2"
+    ],
+    "COMMAND_INJECTION": [
+      "client2"
+    ],
+    "DDOS_ACK_FRAGMENTATION": [
+      "client2",
+      "client6"
+    ],
+    "DDOS_HTTP_FLOOD": [
+      "client2",
+      "client6"
+    ],
+    "DDOS_ICMP_FLOOD": [
+      "client2",
+      "client5",
+      "client6"
+    ],
+    "DDOS_ICMP_FRAGMENTATION": [
+      "client2",
+      "client6"
+    ],
+    "DDOS_PSHACK_FLOOD": [
+      "client2"
+    ],
+    "DDOS_RSTFIN_FLOOD": [
+      "client2"
+    ],
+    "DDOS_SLOWLORIS": [
+      "client2"
+    ],
+    "DDOS_SYNONYMOUS_IP_FLOOD": [
+      "client2"
+    ],
+    "DDOS_SYN_FLOOD": [
+      "client2"
+    ],
+    "DDOS_TCP_FLOOD": [
+      "client2"
+    ],
+    "DDOS_UDP_FLOOD": [
+      "client2",
+      "client5"
+    ],
+    "DDOS_UDP_FRAGMENTATION": [
+      "client2"
+    ],
+    "DICTIONARY_BRUTE_FORCE": [
+      "client2",
+      "client6"
+    ],
+    "DNS_SPOOFING": [
+      "client2",
+      "client6"
+    ],
+    "DOS_HTTP_FLOOD": [
+      "client2",
+      "client6"
+    ],
+    "DOS_SYN_FLOOD": [
+      "client2"
+    ],
+    "DOS_TCP_FLOOD": [
+      "client2",
+      "client5"
+    ],
+    "DOS_UDP_FLOOD": [
+      "client2",
+      "client5",
+      "client6"
+    ],
+    "MIRAI_GREETH_FLOOD": [
+      "client2",
+      "client6"
+    ],
+    "MIRAI_GREIP_FLOOD": [
+      "client2"
+    ],
+    "MIRAI_UDP_PLAIN": [
+      "client2"
+    ],
+    "MITM_ARP_SPOOFING": [
+      "client2",
+      "client5",
+      "client6"
+    ],
+    "RECON_HOST_DISCOVERY": [
+      "client2"
+    ],
+    "RECON_OS_SCAN": [
+      "client2",
+      "client5"
+    ],
+    "RECON_PING_SWEEP": [
+      "client2",
+      "client5"
+    ],
+    "RECON_PORT_SCAN": [
+      "client2",
+      "client5"
+    ],
+    "SQL_INJECTION": [
+      "client2",
+      "client4",
+      "client6"
+    ],
+    "UPLOADING_ATTACK": [
+      "client2",
+      "client6"
+    ],
+    "VULNERABILITY_SCAN": [
+      "client2",
+      "client5",
+      "client6"
+    ],
+    "EXPLOITS": [
+      "client3"
+    ],
+    "FUZZERS": [
+      "client3"
+    ],
+    "GENERIC": [
+      "client3"
+    ],
+    "RECONNAISSANCE": [
+      "client3"
+    ],
+    "BOT": [
+      "client4"
+    ],
+    "DOS_GOLDENEYE": [
+      "client4"
+    ],
+    "DOS_HULK": [
+      "client4"
+    ],
+    "DOS_SLOWHTTPTEST": [
+      "client4"
+    ],
+    "DOS_SLOWLORIS": [
+      "client4"
+    ],
+    "FTP_PATATOR": [
+      "client4"
+    ],
+    "HEARTBLEED": [
+      "client4"
+    ],
+    "PORT_SCAN": [
+      "client4"
+    ],
+    "SSH_PATATOR": [
+      "client4"
+    ],
+    "WEB_BRUTE_FORCE": [
+      "client4"
+    ],
+    "DOS_ICMP_FLOOD": [
+      "client5"
+    ],
+    "MQTT_DDOS_PUBLISH_FLOOD": [
+      "client5"
+    ],
+    "MQTT_DOS_CONNECT_FLOOD": [
+      "client5"
+    ],
+    "MQTT_DOS_PUBLISH_FLOOD": [
+      "client5"
+    ],
+    "MQTT_MALFORMED": [
+      "client5"
+    ]
+  }
+}

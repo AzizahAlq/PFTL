@@ -1,0 +1,62 @@
+global_id,semantic_label,number_of_clients,is_shared,clients
+0,BENIGN,6,True,"client1, client2, client3, client4, client5, client6"
+1,BACKDOOR,1,False,client1
+2,BACKDOOR_MALWARE,1,False,client2
+3,BOT,1,False,client4
+4,BROWSER_HIJACKING,1,False,client2
+5,COMMAND_INJECTION,1,False,client2
+6,DDOS,2,True,"client1, client4"
+7,DDOS_ACK_FRAGMENTATION,2,True,"client2, client6"
+8,DDOS_HTTP_FLOOD,2,True,"client2, client6"
+9,DDOS_ICMP_FLOOD,3,True,"client2, client5, client6"
+10,DDOS_ICMP_FRAGMENTATION,2,True,"client2, client6"
+11,DDOS_PSHACK_FLOOD,1,False,client2
+12,DDOS_RSTFIN_FLOOD,1,False,client2
+13,DDOS_SLOWLORIS,1,False,client2
+14,DDOS_SYNONYMOUS_IP_FLOOD,1,False,client2
+15,DDOS_SYN_FLOOD,1,False,client2
+16,DDOS_TCP_FLOOD,1,False,client2
+17,DDOS_UDP_FLOOD,2,True,"client2, client5"
+18,DDOS_UDP_FRAGMENTATION,1,False,client2
+19,DICTIONARY_BRUTE_FORCE,2,True,"client2, client6"
+20,DNS_SPOOFING,2,True,"client2, client6"
+21,DOS,2,True,"client1, client3"
+22,DOS_GOLDENEYE,1,False,client4
+23,DOS_HTTP_FLOOD,2,True,"client2, client6"
+24,DOS_HULK,1,False,client4
+25,DOS_ICMP_FLOOD,1,False,client5
+26,DOS_SLOWHTTPTEST,1,False,client4
+27,DOS_SLOWLORIS,1,False,client4
+28,DOS_SYN_FLOOD,1,False,client2
+29,DOS_TCP_FLOOD,2,True,"client2, client5"
+30,DOS_UDP_FLOOD,3,True,"client2, client5, client6"
+31,EXPLOITS,1,False,client3
+32,FTP_PATATOR,1,False,client4
+33,FUZZERS,1,False,client3
+34,GENERIC,1,False,client3
+35,HEARTBLEED,1,False,client4
+36,INJECTION,1,False,client1
+37,MIRAI_GREETH_FLOOD,2,True,"client2, client6"
+38,MIRAI_GREIP_FLOOD,1,False,client2
+39,MIRAI_UDP_PLAIN,1,False,client2
+40,MITM,1,False,client1
+41,MITM_ARP_SPOOFING,3,True,"client2, client5, client6"
+42,MQTT_DDOS_PUBLISH_FLOOD,1,False,client5
+43,MQTT_DOS_CONNECT_FLOOD,1,False,client5
+44,MQTT_DOS_PUBLISH_FLOOD,1,False,client5
+45,MQTT_MALFORMED,1,False,client5
+46,PASSWORD,1,False,client1
+47,PORT_SCAN,1,False,client4
+48,RANSOMWARE,1,False,client1
+49,RECONNAISSANCE,1,False,client3
+50,RECON_HOST_DISCOVERY,1,False,client2
+51,RECON_OS_SCAN,2,True,"client2, client5"
+52,RECON_PING_SWEEP,2,True,"client2, client5"
+53,RECON_PORT_SCAN,2,True,"client2, client5"
+54,SCANNING,1,False,client1
+55,SQL_INJECTION,3,True,"client2, client4, client6"
+56,SSH_PATATOR,1,False,client4
+57,UPLOADING_ATTACK,2,True,"client2, client6"
+58,VULNERABILITY_SCAN,3,True,"client2, client5, client6"
+59,WEB_BRUTE_FORCE,1,False,client4
+60,XSS,4,True,"client1, client2, client4, client6"

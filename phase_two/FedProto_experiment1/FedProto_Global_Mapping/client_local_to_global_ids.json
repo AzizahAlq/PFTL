@@ -1,0 +1,420 @@
+{
+  "client1": {
+    "dataset": "CIC-ToN-IoT",
+    "number_of_local_classes": 10,
+    "source_mapping_file": "/nfs/aalqahtani/Proto_PFTL_Multi_class/M_PFTL_codes/Multi_class_Datasets/D1_CIC-ToN-IoT_label_mapping.json",
+    "local_to_global": {
+      "0": {
+        "global_id": 0,
+        "semantic_label": "BENIGN"
+      },
+      "1": {
+        "global_id": 60,
+        "semantic_label": "XSS"
+      },
+      "2": {
+        "global_id": 46,
+        "semantic_label": "PASSWORD"
+      },
+      "3": {
+        "global_id": 36,
+        "semantic_label": "INJECTION"
+      },
+      "4": {
+        "global_id": 48,
+        "semantic_label": "RANSOMWARE"
+      },
+      "5": {
+        "global_id": 54,
+        "semantic_label": "SCANNING"
+      },
+      "6": {
+        "global_id": 1,
+        "semantic_label": "BACKDOOR"
+      },
+      "7": {
+        "global_id": 40,
+        "semantic_label": "MITM"
+      },
+      "8": {
+        "global_id": 6,
+        "semantic_label": "DDOS"
+      },
+      "9": {
+        "global_id": 21,
+        "semantic_label": "DOS"
+      }
+    }
+  },
+  "client2": {
+    "dataset": "CIC-IoT-2023",
+    "number_of_local_classes": 34,
+    "source_mapping_file": "/nfs/aalqahtani/Proto_PFTL_Multi_class/M_PFTL_codes/Multi_class_Datasets/D2_CIC-IoT-2023_label_mapping.json",
+    "local_to_global": {
+      "0": {
+        "global_id": 9,
+        "semantic_label": "DDOS_ICMP_FLOOD"
+      },
+      "1": {
+        "global_id": 17,
+        "semantic_label": "DDOS_UDP_FLOOD"
+      },
+      "2": {
+        "global_id": 16,
+        "semantic_label": "DDOS_TCP_FLOOD"
+      },
+      "3": {
+        "global_id": 11,
+        "semantic_label": "DDOS_PSHACK_FLOOD"
+      },
+      "4": {
+        "global_id": 15,
+        "semantic_label": "DDOS_SYN_FLOOD"
+      },
+      "5": {
+        "global_id": 12,
+        "semantic_label": "DDOS_RSTFIN_FLOOD"
+      },
+      "6": {
+        "global_id": 14,
+        "semantic_label": "DDOS_SYNONYMOUS_IP_FLOOD"
+      },
+      "7": {
+        "global_id": 30,
+        "semantic_label": "DOS_UDP_FLOOD"
+      },
+      "8": {
+        "global_id": 29,
+        "semantic_label": "DOS_TCP_FLOOD"
+      },
+      "9": {
+        "global_id": 28,
+        "semantic_label": "DOS_SYN_FLOOD"
+      },
+      "10": {
+        "global_id": 10,
+        "semantic_label": "DDOS_ICMP_FRAGMENTATION"
+      },
+      "11": {
+        "global_id": 58,
+        "semantic_label": "VULNERABILITY_SCAN"
+      },
+      "12": {
+        "global_id": 41,
+        "semantic_label": "MITM_ARP_SPOOFING"
+      },
+      "13": {
+        "global_id": 7,
+        "semantic_label": "DDOS_ACK_FRAGMENTATION"
+      },
+      "14": {
+        "global_id": 18,
+        "semantic_label": "DDOS_UDP_FRAGMENTATION"
+      },
+      "15": {
+        "global_id": 0,
+        "semantic_label": "BENIGN"
+      },
+      "16": {
+        "global_id": 37,
+        "semantic_label": "MIRAI_GREETH_FLOOD"
+      },
+      "17": {
+        "global_id": 39,
+        "semantic_label": "MIRAI_UDP_PLAIN"
+      },
+      "18": {
+        "global_id": 38,
+        "semantic_label": "MIRAI_GREIP_FLOOD"
+      },
+      "19": {
+        "global_id": 20,
+        "semantic_label": "DNS_SPOOFING"
+      },
+      "20": {
+        "global_id": 50,
+        "semantic_label": "RECON_HOST_DISCOVERY"
+      },
+      "21": {
+        "global_id": 51,
+        "semantic_label": "RECON_OS_SCAN"
+      },
+      "22": {
+        "global_id": 53,
+        "semantic_label": "RECON_PORT_SCAN"
+      },
+      "23": {
+        "global_id": 23,
+        "semantic_label": "DOS_HTTP_FLOOD"
+      },
+      "24": {
+        "global_id": 8,
+        "semantic_label": "DDOS_HTTP_FLOOD"
+      },
+      "25": {
+        "global_id": 13,
+        "semantic_label": "DDOS_SLOWLORIS"
+      },
+      "26": {
+        "global_id": 19,
+        "semantic_label": "DICTIONARY_BRUTE_FORCE"
+      },
+      "27": {
+        "global_id": 4,
+        "semantic_label": "BROWSER_HIJACKING"
+      },
+      "28": {
+        "global_id": 55,
+        "semantic_label": "SQL_INJECTION"
+      },
+      "29": {
+        "global_id": 5,
+        "semantic_label": "COMMAND_INJECTION"
+      },
+      "30": {
+        "global_id": 60,
+        "semantic_label": "XSS"
+      },
+      "31": {
+        "global_id": 2,
+        "semantic_label": "BACKDOOR_MALWARE"
+      },
+      "32": {
+        "global_id": 52,
+        "semantic_label": "RECON_PING_SWEEP"
+      },
+      "33": {
+        "global_id": 57,
+        "semantic_label": "UPLOADING_ATTACK"
+      }
+    }
+  },
+  "client3": {
+    "dataset": "UNSW-NB15",
+    "number_of_local_classes": 6,
+    "source_mapping_file": "/nfs/aalqahtani/Proto_PFTL_Multi_class/M_PFTL_codes/Multi_class_Datasets/D3_UNSW-NB15_label_mapping.json",
+    "local_to_global": {
+      "0": {
+        "global_id": 0,
+        "semantic_label": "BENIGN"
+      },
+      "1": {
+        "global_id": 31,
+        "semantic_label": "EXPLOITS"
+      },
+      "2": {
+        "global_id": 33,
+        "semantic_label": "FUZZERS"
+      },
+      "3": {
+        "global_id": 49,
+        "semantic_label": "RECONNAISSANCE"
+      },
+      "4": {
+        "global_id": 21,
+        "semantic_label": "DOS"
+      },
+      "5": {
+        "global_id": 34,
+        "semantic_label": "GENERIC"
+      }
+    }
+  },
+  "client4": {
+    "dataset": "CIC-IDS-2017",
+    "number_of_local_classes": 14,
+    "source_mapping_file": "/nfs/aalqahtani/Proto_PFTL_Multi_class/M_PFTL_codes/Multi_class_Datasets/D4_CIC-IDS-2017_label_mapping.json",
+    "local_to_global": {
+      "0": {
+        "global_id": 0,
+        "semantic_label": "BENIGN"
+      },
+      "1": {
+        "global_id": 3,
+        "semantic_label": "BOT"
+      },
+      "2": {
+        "global_id": 6,
+        "semantic_label": "DDOS"
+      },
+      "3": {
+        "global_id": 22,
+        "semantic_label": "DOS_GOLDENEYE"
+      },
+      "4": {
+        "global_id": 24,
+        "semantic_label": "DOS_HULK"
+      },
+      "5": {
+        "global_id": 26,
+        "semantic_label": "DOS_SLOWHTTPTEST"
+      },
+      "6": {
+        "global_id": 27,
+        "semantic_label": "DOS_SLOWLORIS"
+      },
+      "7": {
+        "global_id": 32,
+        "semantic_label": "FTP_PATATOR"
+      },
+      "8": {
+        "global_id": 35,
+        "semantic_label": "HEARTBLEED"
+      },
+      "9": {
+        "global_id": 47,
+        "semantic_label": "PORT_SCAN"
+      },
+      "10": {
+        "global_id": 56,
+        "semantic_label": "SSH_PATATOR"
+      },
+      "11": {
+        "global_id": 59,
+        "semantic_label": "WEB_BRUTE_FORCE"
+      },
+      "12": {
+        "global_id": 55,
+        "semantic_label": "SQL_INJECTION"
+      },
+      "13": {
+        "global_id": 60,
+        "semantic_label": "XSS"
+      }
+    }
+  },
+  "client5": {
+    "dataset": "CIC-BCCC-NRC-2024",
+    "number_of_local_classes": 15,
+    "source_mapping_file": "/nfs/aalqahtani/Proto_PFTL_Multi_class/M_PFTL_codes/Multi_class_Datasets/D5_CIC-BCCC-NRC-2024_label_mapping.json",
+    "local_to_global": {
+      "0": {
+        "global_id": 0,
+        "semantic_label": "BENIGN"
+      },
+      "1": {
+        "global_id": 9,
+        "semantic_label": "DDOS_ICMP_FLOOD"
+      },
+      "2": {
+        "global_id": 17,
+        "semantic_label": "DDOS_UDP_FLOOD"
+      },
+      "3": {
+        "global_id": 25,
+        "semantic_label": "DOS_ICMP_FLOOD"
+      },
+      "4": {
+        "global_id": 29,
+        "semantic_label": "DOS_TCP_FLOOD"
+      },
+      "5": {
+        "global_id": 30,
+        "semantic_label": "DOS_UDP_FLOOD"
+      },
+      "6": {
+        "global_id": 41,
+        "semantic_label": "MITM_ARP_SPOOFING"
+      },
+      "7": {
+        "global_id": 42,
+        "semantic_label": "MQTT_DDOS_PUBLISH_FLOOD"
+      },
+      "8": {
+        "global_id": 43,
+        "semantic_label": "MQTT_DOS_CONNECT_FLOOD"
+      },
+      "9": {
+        "global_id": 44,
+        "semantic_label": "MQTT_DOS_PUBLISH_FLOOD"
+      },
+      "10": {
+        "global_id": 45,
+        "semantic_label": "MQTT_MALFORMED"
+      },
+      "11": {
+        "global_id": 51,
+        "semantic_label": "RECON_OS_SCAN"
+      },
+      "12": {
+        "global_id": 52,
+        "semantic_label": "RECON_PING_SWEEP"
+      },
+      "13": {
+        "global_id": 53,
+        "semantic_label": "RECON_PORT_SCAN"
+      },
+      "14": {
+        "global_id": 58,
+        "semantic_label": "VULNERABILITY_SCAN"
+      }
+    }
+  },
+  "client6": {
+    "dataset": "CIC-IoT-IDAD-2024",
+    "number_of_local_classes": 15,
+    "source_mapping_file": "/nfs/aalqahtani/Proto_PFTL_Multi_class/M_PFTL_codes/Multi_class_Datasets/D6_CIC-IoT-IDAD-2024_label_mapping.json",
+    "local_to_global": {
+      "0": {
+        "global_id": 7,
+        "semantic_label": "DDOS_ACK_FRAGMENTATION"
+      },
+      "1": {
+        "global_id": 23,
+        "semantic_label": "DOS_HTTP_FLOOD"
+      },
+      "2": {
+        "global_id": 8,
+        "semantic_label": "DDOS_HTTP_FLOOD"
+      },
+      "3": {
+        "global_id": 58,
+        "semantic_label": "VULNERABILITY_SCAN"
+      },
+      "4": {
+        "global_id": 30,
+        "semantic_label": "DOS_UDP_FLOOD"
+      },
+      "5": {
+        "global_id": 0,
+        "semantic_label": "BENIGN"
+      },
+      "6": {
+        "global_id": 20,
+        "semantic_label": "DNS_SPOOFING"
+      },
+      "7": {
+        "global_id": 41,
+        "semantic_label": "MITM_ARP_SPOOFING"
+      },
+      "8": {
+        "global_id": 10,
+        "semantic_label": "DDOS_ICMP_FRAGMENTATION"
+      },
+      "9": {
+        "global_id": 9,
+        "semantic_label": "DDOS_ICMP_FLOOD"
+      },
+      "10": {
+        "global_id": 55,
+        "semantic_label": "SQL_INJECTION"
+      },
+      "11": {
+        "global_id": 37,
+        "semantic_label": "MIRAI_GREETH_FLOOD"
+      },
+      "12": {
+        "global_id": 19,
+        "semantic_label": "DICTIONARY_BRUTE_FORCE"
+      },
+      "13": {
+        "global_id": 60,
+        "semantic_label": "XSS"
+      },
+      "14": {
+        "global_id": 57,
+        "semantic_label": "UPLOADING_ATTACK"
+      }
+    }
+  }
+}
