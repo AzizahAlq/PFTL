@@ -492,7 +492,6 @@ The experimental framework evaluates PFTL across several dimensions, including:
 - model heterogeneity,
 - label-space heterogeneity,
 - non-IID distributions,
-- negative transfer,
 - unseen-client transfer,
 - communication efficiency,
 - scalability, and
