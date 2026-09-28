@@ -92,11 +92,9 @@ Instead of communicating the complete local model, PFTL exchanges only the param
 
 The private encoder, adapter, and classifier remain client-specific.
 
-### Personalized Local–Global Blending
+### Personalized Local-Global Blending
 
 After receiving the aggregated shared-layer parameters, each client combines its locally learned shared-layer parameters with the global candidate.
-
-For client \(i\):
 
 ```text
 W_mixed = γ_local W_local + γ_global W_global
@@ -114,9 +112,9 @@ The blending coefficients control the balance between local specialization and c
 
 Phase Two also evaluates adaptive γ-blending.
 
-The global blending coefficient is adjusted according to the client's local validation behavior.
+The global blending coefficient is adjusted according to the client's local validation behavior. If collaborative knowledge improves validation performance, its contribution can increase. Otherwise, the client can shift toward its locally learned shared-layer parameters.
 
-If the global candidate provides useful knowledge, its contribution can increase. If it is less beneficial, the client can shift toward its locally learned shared-layer parameters.
+The exact adaptive parameters used in each experiment are defined in the corresponding scripts.
 
 ### Validation-Based Safety Gate
 
@@ -154,8 +152,8 @@ Each communication round follows the general process:
               │ Central Aggregator  │
               └──────────┬──────────┘
                          │
-                Broadcast Shared
-                Layer Parameters
+                  Broadcast Shared
+                  Layer Parameters
                          │
           ┌──────────────┼──────────────┐
           ▼              ▼              ▼
@@ -163,16 +161,16 @@ Each communication round follows the general process:
           │              │              │
           └────── Local Training ───────┘
                          │
-                Upload Shared-Layer
-                    Parameters
+                  Upload Shared-Layer
+                      Parameters
                          │
                          ▼
               ┌─────────────────────┐
               │   Weighted FedAvg   │
               └──────────┬──────────┘
                          │
-                 Global Shared-Layer
-                     Parameters
+                  Global Shared-Layer
+                      Parameters
                          │
           ┌──────────────┼──────────────┐
           ▼              ▼              ▼
@@ -205,23 +203,27 @@ The evaluation is divided into two main phases.
 
 Phase One evaluates PFTL in a controlled binary-classification environment.
 
-This phase provides comparisons with conventional federated and personalized federated-learning baselines.
+The phase includes PFTL and the following baseline implementations:
 
-The Phase One implementation and baselines are organized under:
+- Standalone
+- FedAvg
+- FedClassAvg
+- FedPer
+- FedRep
+
+The implementation is organized under:
 
 ```text
 phase_one/
 ├── pftl/
 │   └── core/
-├── baselines/
-│   ├── fedavg/
-│   ├── fedclassavg/
-│   ├── fedper/
-│   └── fedrep/
-└── experiments/
+└── baselines/
+    ├── standalone/
+    ├── fedavg/
+    ├── fedclassavg/
+    ├── fedper/
+    └── fedrep/
 ```
-
-Different local/global blending configurations can be evaluated to study the effect of personalization.
 
 ### Phase Two — Heterogeneous Multi-Class Setting
 
@@ -236,26 +238,13 @@ Clients may differ in:
 | Label spaces | ✓ |
 | Non-IID distributions | ✓ |
 
-The current adaptive configuration uses:
-
-```text
-γ_global_init = 0.50
-γ_local_init  = 0.50
-
-η       = 0.05
-τ       = 0.05
-γ_min   = 0.10
-γ_max   = 0.90
-ε       = 0.001
-```
-
-Phase Two also contains experiments comparing static and adaptive personalization and experiments involving FedProto.
+Phase Two contains the main multi-class PFTL implementation together with additional experiments for adaptive personalization and FedProto comparison.
 
 ---
 
 ## Baselines
 
-The repository contains implementations and experiments involving the following methods:
+The repository contains implementations or experimental comparisons involving:
 
 - Standalone learning
 - FedAvg
@@ -271,7 +260,7 @@ The available baseline depends on the experimental phase and the type of heterog
 
 ## Datasets
 
-The repository is organized into separate dataset directories for Phase One and Phase Two:
+Datasets are organized into separate directories for Phase One and Phase Two:
 
 ```text
 datasets/
@@ -287,7 +276,7 @@ The Phase One directory contains the prepared datasets used for the controlled b
 
 The Phase Two directory contains the prepared datasets used for the heterogeneous multi-class experiments.
 
-The current Phase Two dataset collection includes prepared data corresponding to:
+The Phase Two collection includes prepared data corresponding to:
 
 - CIC-ToN-IoT
 - CIC-IoT-2023
@@ -296,27 +285,29 @@ The current Phase Two dataset collection includes prepared data corresponding to
 - CIC-BCCC-NRC-2024
 - CIC-IoT-IDaD-2024
 
-The Phase Two dataset directory also contains the generated ToN-IoT virtual-client data used by the corresponding experiment:
+The directory also contains:
 
 ```text
-datasets/phase_two_datasets/ton_iot_10_virtual_clients/
+create_10_stratified_clients.py
+ton_iot_10_virtual_clients/
 ```
 
-Dataset preprocessing and client-partitioning scripts are provided where applicable.
+The `ton_iot_10_virtual_clients/` directory contains the generated virtual-client datasets used in the corresponding experiment.
 
-Users of the repository should also refer to the original dataset providers for dataset descriptions, licensing conditions, and citation requirements.
+Users should also refer to the original dataset providers for dataset descriptions, licensing conditions, and citation requirements.
 
 ---
 
 ## Repository Structure
 
-The repository is currently organized as follows:
+The main GitHub repository is organized as follows:
 
 ```text
 PFTL/
 │
 ├── README.md
 ├── requirements.txt
+├── .gitattributes
 ├── .gitignore
 │
 ├── datasets/
@@ -327,36 +318,36 @@ PFTL/
 ├── phase_one/
 │   ├── pftl/
 │   │   └── core/
-│   ├── baselines/
-│   │   ├── fedavg/
-│   │   ├── fedclassavg/
-│   │   ├── fedper/
-│   │   └── fedrep/
-│  
+│   └── baselines/
+│       ├── standalone/
+│       ├── fedavg/
+│       ├── fedclassavg/
+│       ├── fedper/
+│       └── fedrep/
 │
 ├── phase_two/
 │   ├── pftl/
-│   │   └── core/ static_vs_adaptive
-│   ├── baselines/
-│   │── Standalone
+│   │   └── core/
+│   ├── experiments/
+│   │   └── static_vs_adaptive/
 │   ├── FedProto_experiment1/
+│   │   └── FedProto_Global_Mapping/
 │   └── FedProtoVsPFTL_experiment2/
-│
-├── unseen_client/
-│   ├── binary/
-│   └── multiclass/
 │
 ├── scalability/
 │
 ├── statistical_analysis/
-
+│
+└── unseen_client/
+    ├── binary/
+    └── multiclass/
 ```
 
 ---
 
 ## Requirements
 
-The implementation uses Python and the following main packages:
+The main Python packages used by the implementation are:
 
 ```text
 numpy
@@ -369,7 +360,13 @@ matplotlib
 seaborn
 ```
 
-Python standard-library packages such as `os`, `csv`, `pickle`, `threading`, `random`, `time`, `json`, `pathlib`, and `datetime` are also used but do not require separate installation.
+They can be installed using:
+
+```bash
+pip install -r requirements.txt
+```
+
+Python standard-library packages such as `os`, `csv`, `pickle`, `threading`, `random`, `time`, `json`, `pathlib`, and `datetime` do not require separate installation.
 
 ---
 
@@ -398,7 +395,54 @@ pip install -r requirements.txt
 
 ---
 
+## Important: Update Dataset and Output Paths
+
+Before running any experiment, the dataset paths in the corresponding Python scripts must be changed to match the dataset locations on the user's system.
+
+The original experimental scripts may contain local or server-specific paths used during development, for example:
+
+```python
+DATA_PATH = "/nfs/.../dataset.csv"
+```
+
+These paths will not automatically work on another system.
+
+They should be replaced with the appropriate path on the user's machine, for example:
+
+```python
+DATA_PATH = "/path/to/PFTL/datasets/phase_two_datasets/D1_CIC-ToN-IoT_new.csv"
+```
+
+The dataset paths must be checked and updated for all experiments, including:
+
+- Phase One PFTL
+- Phase One standalone experiments
+- Phase One federated baselines
+- Phase Two PFTL
+- static vs. adaptive experiments
+- FedProto experiments
+- unseen-client experiments
+- scalability experiments
+
+Some scripts may also contain environment-specific paths for:
+
+- output files,
+- saved models,
+- checkpoints,
+- logs,
+- mapping files,
+- intermediate files, and
+- transferred parameters.
+
+These paths should also be changed according to the user's local environment before execution.
+
+Users do not need to reproduce the original directory paths used during development.
+
+---
+
 ## Running PFTL
+
+Before starting an experiment, verify that all dataset, output, model, and log paths in the corresponding scripts have been updated for the local environment.
 
 PFTL uses a client-server architecture implemented with gRPC.
 
@@ -413,13 +457,13 @@ The general execution procedure is:
 7. Evaluate the personalized candidate using the validation gate.
 8. Continue until the configured number of communication rounds is completed.
 
-Because the repository contains multiple experimental configurations, use the scripts in the corresponding Phase One, Phase Two, baseline, unseen-client, or scalability directory.
+Because the repository contains multiple experimental configurations, use the scripts in the corresponding Phase One, Phase Two, unseen-client, or scalability directory.
 
 ---
 
-## Static vs Adaptive Experiment
+## Static vs. Adaptive Experiment
 
-The Phase Two static-versus-adaptive experiments are located under:
+The Phase Two static-versus-adaptive experiments are organized under:
 
 ```text
 phase_two/experiments/static_vs_adaptive/
@@ -427,21 +471,43 @@ phase_two/experiments/static_vs_adaptive/
 
 These experiments investigate the effect of using fixed γ coefficients compared with validation-driven adaptive γ values.
 
+The exact hyperparameter values used for each experiment are defined in the corresponding scripts.
+
 ---
 
 ## FedProto Experiments
 
-Phase Two also contains experiments involving FedProto.
+Phase Two contains two FedProto-related experimental configurations.
 
-These experiments are used to evaluate PFTL relative to prototype-based federated knowledge sharing under heterogeneous conditions.
+### Experiment 1
 
-The corresponding code is located in the Phase Two experiment and baseline directories.
+```text
+phase_two/FedProto_experiment1/
+```
+
+This directory contains the FedProto implementation, corresponding PFTL configurations, and semantic label-mapping utilities.
+
+The generated global semantic mapping files are organized under:
+
+```text
+phase_two/FedProto_experiment1/FedProto_Global_Mapping/
+```
+
+### Experiment 2 — FedProto vs. PFTL
+
+```text
+phase_two/FedProtoVsPFTL_experiment2/
+```
+
+This experiment contains FedProto, PFTL, and standalone client configurations used for experimental comparison.
+
+It also includes scripts for collecting results across multiple random seeds.
 
 ---
 
 ## Unseen-Client Evaluation
 
-The repository contains separate unseen-client experiments:
+Unseen-client experiments are separated into binary and multi-class configurations:
 
 ```text
 unseen_client/
@@ -451,7 +517,7 @@ unseen_client/
 
 These experiments investigate whether shared-layer parameters learned during federation can provide useful transferable knowledge to clients that did not participate in the original federated training.
 
-The evaluation includes local standalone training and transfer-based configurations.
+The evaluation includes standalone/local learning and transfer-based configurations.
 
 ---
 
@@ -459,26 +525,29 @@ The evaluation includes local standalone training and transfer-based configurati
 
 Scalability experiments evaluate PFTL as the number of participating clients increases.
 
-The scalability evaluation investigates whether the compact shared-layer parameter exchange remains effective as the federation grows.
-
-Related code and results are organized under:
+The corresponding code is organized under:
 
 ```text
 scalability/
-results/scalability/
+```
+
+The generated ToN-IoT virtual-client datasets used by the corresponding scalability experiments are available under:
+
+```text
+datasets/phase_two_datasets/ton_iot_10_virtual_clients/
 ```
 
 ---
 
 ## Statistical Analysis
 
-Statistical analyses associated with the experiments are provided under:
+Statistical analysis files associated with the experimental evaluation are organized under:
 
 ```text
 statistical_analysis/
 ```
 
-These analyses are used to evaluate the consistency and statistical significance of the experimental comparisons across clients and repeated runs.
+These analyses are used to evaluate the consistency and statistical significance of experimental comparisons across clients and repeated runs.
 
 ---
 
@@ -497,7 +566,15 @@ The experimental framework evaluates PFTL across several dimensions, including:
 - scalability, and
 - robustness across multiple random seeds.
 
-Random seeds, experimental parameters, dataset preprocessing, and client configurations should be kept consistent when reproducing the reported experiments.
+When reproducing an experiment:
+
+1. Use the corresponding prepared dataset.
+2. Update the dataset and output paths.
+3. Use the parameters defined in the corresponding experiment script.
+4. Keep the random seed fixed when reproducing a specific run.
+5. Start the appropriate aggregator before the federated clients.
+6. Keep the client and server gRPC configurations consistent.
+7. Use the same preprocessing and client-partitioning configuration.
 
 For the complete experimental methodology and statistical analysis, please refer to the accompanying paper.
 
@@ -509,7 +586,9 @@ PFTL is designed to address heterogeneous and personalized federated knowledge t
 
 The current framework does not introduce a new privacy-preserving mechanism such as differential privacy, secure aggregation, or homomorphic encryption.
 
-Raw data are not exchanged among participating clients during federated training. The primary methodological contributions concern heterogeneous collaboration, personalized knowledge transfer, shared-layer parameter exchange, validation-driven adaptation, communication efficiency, and robustness.
+Raw data are not exchanged among participating clients during federated training.
+
+The primary methodological contributions concern heterogeneous collaboration, personalized knowledge transfer, shared-layer parameter exchange, validation-driven adaptation, communication efficiency, and robustness.
 
 ---
 
