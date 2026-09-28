@@ -1,27 +1,5 @@
 #!/usr/bin/env python3.10
 # ============================================================
-# client2_FEDAVG_full_model_LOCAL_GLOBAL_SAME_CSV.py
-#
-# FedAvg (FULL MODEL):
-# - Share and aggregate ALL trainable layers:
-#     input_adapter, feat1, shared_dense, clf
-#
-# Logs LOCAL (before sync) and GLOBAL (after sync) into SAME metrics CSV
-# phases:
-#   - local_before_sync
-#   - global_after_sync
-#   - final
-#
-# Also writes SUMMARY_CSV (one row per server round after sync):
-#   local_macro_f1 vs global_macro_f1
-#
-# Strict barrier: wait until server_round >= sent_round + 1
-#
-# Server expectation:
-#   - GetSharedWeights returns pickled dict: {layer_name: weights_list}
-#   - SendSharedUpdate receives pickled dict payload similarly
-# ============================================================
-
 import os, random
 SEED = 123
 SPLIT_SEED = SEED
