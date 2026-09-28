@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Environment/secrets
+.env
+*.pem
+*.key
+
+# Logs
+*.log
+
+# Model checkpoints
+*.h5
+*.keras
+*.ckpt
+
+# Temporary files
+*.tmp
+*.temp
