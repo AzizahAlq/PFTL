@@ -2,34 +2,36 @@
 
 Official implementation of the paper:
 
-**Personalized Federated Transfer Learning for Intrusion Detection across Networks with Heterogeneous Feature Spaces, Model Architectures, and Label Spaces**
+"Personalized Federated Transfer Learning for Intrusion Detection across Networks with Heterogeneous Feature Spaces, Model Architectures, and Label Spaces"
 
-**Azizah Alqahtani, Walid Aljoby, Mohamed Ragab, Bouziane Brik, Muhamad Felamban, and Tarek Helmy**
+Authors: Azizah Alqahtani, Walid Aljoby, Mohamed Ragab, Bouziane Brik, Muhamad Felamban, and Tarek Helmy
 
 ---
 
 ## Overview
 
-This repository provides the implementation and experimental framework for **Personalized Federated Transfer Learning (PFTL)**, a federated learning approach designed for intrusion detection across heterogeneous network environments.
+This repository provides the implementation and experimental framework for Personalized Federated Transfer Learning (PFTL), a federated learning approach designed for intrusion detection across heterogeneous network environments.
 
-Traditional Federated Learning (FL) generally relies on structural compatibility across participating clients, particularly compatible input representations and model architectures. These assumptions are difficult to maintain in realistic intrusion-detection environments, where organizations may use different traffic features, preprocessing pipelines, local models, and attack taxonomies.
+Traditional Federated Learning (FL) generally relies on structural compatibility among participating clients. In realistic intrusion-detection environments, however, clients may use different traffic features, preprocessing pipelines, local model architectures, attack classes, and data distributions.
 
-PFTL addresses this challenge by enabling collaborative learning across clients with heterogeneous:
+PFTL addresses these challenges by supporting clients with heterogeneous:
 
-* **feature spaces**,
-* **model architectures**,
-* **label spaces**, and
-* **non-IID data distributions**.
+- feature spaces,
+- model architectures,
+- label spaces, and
+- non-IID data distributions.
 
-The central idea of PFTL is to restrict federation to a **compact shared intermediate representation layer**. Each client retains its feature extractor, adapter, and classifier head locally, while only the parameters of the shared layer are synchronized.
+The main idea is to keep most of each client's model private and exchange only the parameters of a compact shared layer.
 
-This creates a lightweight common interface for knowledge transfer without requiring identical raw feature dimensions, identical private architectures, or identical classifier heads.
+Each client maintains its own feature encoder, private adapter, and classifier head. Only the shared-layer parameters are exchanged with the server and aggregated during federated training.
+
+This provides a lightweight interface for knowledge transfer without requiring clients to have identical input dimensions, private architectures, or output label spaces.
 
 ---
 
-## Key Idea
+## PFTL Architecture
 
-Instead of aggregating the complete client model, PFTL decomposes each local model into private and shared components:
+Each client follows the general architecture:
 
 ```text
 Heterogeneous Local Input
@@ -56,46 +58,43 @@ Heterogeneous Local Input
 └──────────────────────────┘
           │
           ▼
-    Local Prediction
+     Local Prediction
 ```
 
-Only the **compact shared layer** is communicated between clients and the central aggregator.
+Only the shared-layer parameters are communicated between each client and the central aggregator.
 
 The following components remain local:
 
-* raw client data,
-* private feature encoder,
-* private adapter,
-* private classifier head.
+- raw client data,
+- private feature encoder,
+- private adapter,
+- private classifier head.
 
-Clients therefore need to agree only on the dimensionality of the compact shared interface rather than on their complete input, model, or output structures.
+Therefore, clients only need to agree on the dimensionality of the shared layer.
 
 ---
 
-## Main Contributions
+## Main Features
 
-### 1. Unified PFTL Framework for Heterogeneous Intrusion Detection
+### Heterogeneous Federated Learning
 
-PFTL enables collaborative intrusion detection across clients with simultaneous heterogeneity in:
+PFTL supports simultaneous heterogeneity in:
 
-* feature spaces,
-* model architectures,
-* label spaces, and
-* local data distributions.
+- feature spaces,
+- private model architectures,
+- label spaces,
+- attack taxonomies, and
+- local data distributions.
 
-Rather than requiring complete model compatibility, PFTL establishes a compact common interface through which heterogeneous clients can exchange knowledge.
+### Shared-Layer Parameter Exchange
 
-### 2. Representation-Level Knowledge Sharing
+Instead of communicating the complete local model, PFTL exchanges only the parameters of a compact shared layer.
 
-PFTL synchronizes only a **compact intermediate representation layer**.
+The private encoder, adapter, and classifier remain client-specific.
 
-The private feature extractor, adapter, and classifier head remain client-specific.
+### Personalized Local–Global Blending
 
-This allows clients to use different input feature dimensions and different private model structures while still participating in federated training.
-
-### 3. Personalized Local–Global Knowledge Transfer
-
-PFTL introduces a **γ-blending mechanism** that combines locally updated and globally aggregated shared-layer parameters.
+After receiving the aggregated shared-layer parameters, each client combines its locally learned shared-layer parameters with the global candidate.
 
 For client \(i\):
 
@@ -109,87 +108,71 @@ where:
 γ_local + γ_global = 1
 ```
 
-The blending coefficients determine the balance between:
+The blending coefficients control the balance between local specialization and collaborative knowledge.
 
-* **local specialization**, and
-* **collaborative global knowledge**.
+### Adaptive Personalization
 
-### 4. Adaptive Validation-Driven Personalization
+Phase Two also evaluates adaptive γ-blending.
 
-In the heterogeneous multi-class setting, PFTL dynamically adapts the global blending coefficient according to each client's validation performance.
+The global blending coefficient is adjusted according to the client's local validation behavior.
 
-If collaborative knowledge improves local validation performance, the influence of the global representation can increase.
+If the global candidate provides useful knowledge, its contribution can increase. If it is less beneficial, the client can shift toward its locally learned shared-layer parameters.
 
-If the transferred representation is less beneficial, the client shifts toward its locally learned representation.
+### Validation-Based Safety Gate
 
-### 5. Validation-Based Safety Mechanism
+Each client evaluates the blended candidate using its own local validation data.
 
-PFTL incorporates a lightweight validation-based mechanism to reduce harmful transfer.
-
-After constructing the blended shared representation, each client compares its validation Macro-F1 against the locally updated representation.
-
-The transferred representation is accepted only when:
+The candidate is accepted only when:
 
 ```text
-F1_mixed ≥ F1_local + ε
+F1_mixed >= F1_local + ε
 ```
 
-Otherwise, the client retains the locally updated shared parameters.
+Otherwise, the client keeps its locally updated shared-layer parameters.
 
-This allows each client to regulate transferred knowledge according to its own validation behavior.
+This mechanism is intended to reduce harmful transfer under heterogeneous client conditions.
 
-### 6. Communication-Efficient Knowledge Transfer
+### Communication Efficiency
 
-Because PFTL communicates only the compact shared layer rather than the complete model, the communication payload remains small.
+PFTL communicates only the shared-layer parameters rather than the complete client model.
 
-The measured serialized communication cost is approximately:
+Measured serialized communication in the evaluated configurations is approximately:
 
-| Setting     | Shared Dimension | Communication per Client per Round |
-| ----------- | ---------------: | ---------------------------------: |
-| Binary      |          `q = 4` |                         ~606 bytes |
-| Multi-class |          `q = 8` |                       ~1,404 bytes |
-
-All remaining client-specific model parameters stay local.
-
-### 7. Evaluation under Controlled and Heterogeneous Settings
-
-PFTL is evaluated using a two-phase experimental design.
-
-The first phase provides a controlled binary setting for comparison with conventional federated-learning approaches.
-
-The second phase evaluates the framework under heterogeneous multi-class conditions where clients differ in feature spaces, model structures, label spaces, and local data distributions.
-
-The evaluation also investigates robustness across random seeds, communication efficiency, transfer to previously unseen clients, and scalability.
+| Setting | Shared Dimension | Communication per Client per Round |
+|---|---:|---:|
+| Phase One / Binary | q = 4 | ~606 bytes |
+| Phase Two / Multi-class | q = 8 | ~1,404 bytes |
 
 ---
 
-## PFTL Training Workflow
+## Training Workflow
 
-Each communication round follows the general workflow:
+Each communication round follows the general process:
 
 ```text
               ┌─────────────────────┐
               │ Central Aggregator  │
               └──────────┬──────────┘
                          │
-              Broadcast Shared Layer
+                Broadcast Shared
+                Layer Parameters
                          │
           ┌──────────────┼──────────────┐
           ▼              ▼              ▼
-      Client 1        Client 2       Client N
+       Client 1        Client 2       Client N
           │              │              │
-          │         Local Training      │
-          │              │              │
-          └──────────────┼──────────────┘
+          └────── Local Training ───────┘
                          │
-               Upload Shared Layer
+                Upload Shared-Layer
+                    Parameters
                          │
                          ▼
               ┌─────────────────────┐
               │   Weighted FedAvg   │
               └──────────┬──────────┘
                          │
-                 Global Shared Layer
+                 Global Shared-Layer
+                     Parameters
                          │
           ┌──────────────┼──────────────┐
           ▼              ▼              ▼
@@ -203,287 +186,201 @@ Each communication round follows the general workflow:
 At each round:
 
 1. The server broadcasts the current shared-layer parameters.
-2. Each client initializes its local shared layer using the received parameters.
-3. Clients train their models locally.
+2. Each client initializes or updates its shared layer using the received parameters.
+3. Each client performs local training.
 4. Only the updated shared-layer parameters are uploaded.
 5. The server performs sample-size-weighted aggregation.
-6. The aggregated shared parameters are returned to the clients.
-7. Each client performs local–global γ-blending.
-8. In the adaptive setting, the client evaluates the blended representation using local validation data.
-9. The personalized representation is used to initialize the next local round.
-
----
-
-## Model Architecture
-
-Conceptually, client \(i\) follows:
-
-```text
-x_i
- │
- ▼
-Private Encoder
- │
- ▼
-Private Adapter: Dense(*)
- │
- ▼
-Shared Layer: Dense(q)
- │
- ▼
-Private Classifier: Dense(C_i)
- │
- ▼
-Sigmoid / Softmax
- │
- ▼
-Prediction
-```
-
-### Private Feature Encoder
-
-The implementation uses private feature-extraction components based on:
-
-```text
-Conv1D
-  ↓
-MaxPool1D
-  ↓
-GlobalAveragePooling1D
-```
-
-These layers remain client-specific and can operate on heterogeneous local feature spaces.
-
-### Private Adapter
-
-A private `Dense(*)` adapter maps the client-specific representation to the input dimensionality required by the common shared interface.
-
-The adapter itself is **not aggregated**.
-
-### Shared Layer
-
-The `shared_dense` layer is the only model component synchronized across clients.
-
-The implementation uses:
-
-```text
-Phase One: q = 4
-Phase Two: q = 8
-```
-
-### Private Classification Head
-
-Each client maintains its own classifier.
-
-For binary classification:
-
-```text
-Dense(1) + Sigmoid
-```
-
-For multi-class classification:
-
-```text
-Dense(C_i) + Softmax
-```
-
-Because the classifier remains private, clients can operate with different label spaces and attack taxonomies.
+6. The aggregated shared-layer parameters are returned to the clients.
+7. Each client performs local-global γ-blending.
+8. The candidate is evaluated using local validation data.
+9. The accepted personalized shared-layer parameters are used for the next round.
 
 ---
 
 ## Experimental Design
 
-The framework is evaluated using six intrusion-detection datasets representing heterogeneous IoT and network environments:
+The evaluation is divided into two main phases.
 
-* **CIC-IoT-2022**
-* **CIC-BCCC-NRC-2024**
-* **CIC-IoT-2023**
-* **UNSW-NB15**
-* **TON-IoT**
-* **CIC-IDS-2017**
-
-The evaluation is divided into two complementary phases.
-
----
-
-## Phase One — Controlled Binary Setting
+### Phase One — Controlled Binary Setting
 
 Phase One evaluates PFTL in a controlled binary-classification environment.
 
-In this phase, participating clients use:
+This phase provides comparisons with conventional federated and personalized federated-learning baselines.
 
-* compatible model architectures,
-* aligned binary label spaces, and
-* fixed γ-blending coefficients.
-
-This controlled setting enables direct comparison with conventional federated and personalized federated learning baselines.
-
-Different combinations of local and global blending coefficients are evaluated to study the trade-off between local specialization and collaborative learning.
-
----
-
-## Phase Two — Heterogeneous Multi-Class Setting
-
-Phase Two evaluates PFTL under substantially stronger heterogeneity.
-
-Participating clients may differ in:
-
-| Type of Heterogeneity | Supported |
-| --------------------- | :-------: |
-| Feature spaces        |     ✓     |
-| Model architectures   |     ✓     |
-| Label spaces          |     ✓     |
-| Non-IID distributions |     ✓     |
-
-In this setting, PFTL uses **adaptive γ-blending** together with the **validation-based safety mechanism**.
-
-The adaptive mechanism is initialized with:
+The Phase One implementation and baselines are organized under:
 
 ```text
-γ_global = 0.50
-γ_local  = 0.50
+phase_one/
+├── pftl/
+│   └── core/
+├── baselines/
+│   ├── fedavg/
+│   ├── fedclassavg/
+│   ├── fedper/
+│   └── fedrep/
+└── experiments/
 ```
 
-with:
+Different local/global blending configurations can be evaluated to study the effect of personalization.
+
+### Phase Two — Heterogeneous Multi-Class Setting
+
+Phase Two evaluates PFTL under stronger heterogeneity.
+
+Clients may differ in:
+
+| Type of Heterogeneity | Supported |
+|---|:---:|
+| Feature spaces | ✓ |
+| Model architectures | ✓ |
+| Label spaces | ✓ |
+| Non-IID distributions | ✓ |
+
+The current adaptive configuration uses:
 
 ```text
-η       = 0.05
-τ       = 0.05
+γ_global_init = 0.50
+γ_local_init  = 0.50
+
+η       = 0.08
+τ       = 0.02
 γ_min   = 0.10
 γ_max   = 0.90
 ε       = 0.001
 ```
 
-These parameters allow the degree of collaborative transfer to evolve according to each client's validation behavior.
+Phase Two also contains experiments comparing static and adaptive personalization and experiments involving FedProto.
 
 ---
 
 ## Baselines
 
-The evaluation considers representative federated and personalized learning approaches, including:
+The repository contains implementations and experiments involving the following methods:
 
-* **Standalone Learning**
-* **FedAvg**
-* **FedPer**
-* **FedRep**
-* **FedClassAvg**
-* **FedProto**
+- Standalone learning
+- FedAvg
+- FedPer
+- FedRep
+- FedClassAvg
+- FedProto
+- PFTL
 
-The experimental design distinguishes between methods that require stronger structural compatibility and approaches that can operate under different forms of heterogeneity.
-
----
-
-## Communication Efficiency
-
-A central design goal of PFTL is to avoid unnecessary full-model communication.
-
-If the shared layer contains:
-
-```text
-W_s ∈ R^(p × q)
-b_s ∈ R^q
-```
-
-only:
-
-```text
-(W_s, b_s)
-```
-
-are exchanged.
-
-The private parameters associated with the encoder, adapter, and classifier remain local.
-
-Measured serialized communication:
-
-```text
-Binary setting      ≈ 606 bytes/client/round
-Multi-class setting ≈ 1,404 bytes/client/round
-```
-
-This communication cost is determined primarily by the dimensionality of the compact shared interface rather than the size of each client's complete private architecture.
-
----
-
-## Scalability
-
-PFTL is also evaluated under increasing federation sizes.
-
-The scalability experiment increases the federation from **6 to 90 clients** while evaluating predictive performance under heterogeneous client distributions.
-
-Reported Macro-F1 remains relatively stable:
-
-```text
-6 clients  → Macro-F1 ≈ 0.487
-90 clients → Macro-F1 ≈ 0.464
-```
-
-These experiments examine whether the compact representation-sharing mechanism can maintain useful collaborative learning as the number of participating clients increases.
-
----
-
-## Unseen-Client Transfer
-
-The evaluation additionally investigates whether the learned shared representation can transfer useful knowledge to a client that was not part of the original federation.
-
-This experiment evaluates the transferability of the learned compact shared representation under distribution shift and provides evidence that the shared layer captures information that can be useful beyond the original participating clients.
+The available baseline depends on the experimental phase and the type of heterogeneity being evaluated.
 
 ---
 
 ## Datasets
 
-The datasets are **not redistributed in this repository**.
-
-Please obtain the datasets from their original providers and configure the corresponding paths locally before running the experiments.
-
-The study uses:
+The repository is organized into separate dataset directories for Phase One and Phase Two:
 
 ```text
-CIC-IoT-2022
-CIC-BCCC-NRC-2024
-CIC-IoT-2023
-UNSW-NB15
-TON-IoT
-CIC-IDS-2017
+datasets/
+├── phase_one_datasets/
+└── phase_two_datasets/
 ```
+
+### Phase One Datasets
+
+The Phase One directory contains the prepared datasets used for the controlled binary experiments.
+
+### Phase Two Datasets
+
+The Phase Two directory contains the prepared datasets used for the heterogeneous multi-class experiments.
+
+The current Phase Two dataset collection includes prepared data corresponding to:
+
+- CIC-ToN-IoT
+- CIC-IoT-2023
+- UNSW-NB15
+- CIC-IDS-2017
+- CIC-BCCC-NRC-2024
+- CIC-IoT-IDaD-2024
+
+The Phase Two dataset directory also contains the generated ToN-IoT virtual-client data used by the corresponding experiment:
+
+```text
+datasets/phase_two_datasets/ton_iot_10_virtual_clients/
+```
+
+Dataset preprocessing and client-partitioning scripts are provided where applicable.
+
+Users of the repository should also refer to the original dataset providers for dataset descriptions, licensing conditions, and citation requirements.
 
 ---
 
 ## Repository Structure
 
-The final repository may be organized as follows:
+The repository is currently organized as follows:
 
 ```text
 PFTL/
 │
 ├── README.md
 ├── requirements.txt
+├── .gitignore
 │
 ├── datasets/
-│   └── README.md
+│   ├── phase_one_datasets/
+│   └── phase_two_datasets/
+│       └── ton_iot_10_virtual_clients/
 │
 ├── phase_one/
-│   ├── clients/
-│   ├── server/
+│   ├── pftl/
+│   │   └── core/
 │   ├── baselines/
+│   │   ├── fedavg/
+│   │   ├── fedclassavg/
+│   │   ├── fedper/
+│   │   └── fedrep/
 │   └── experiments/
 │
 ├── phase_two/
-│   ├── clients/
-│   ├── server/
-│   ├── models/
-│   └── experiments/
+│   ├── pftl/
+│   │   └── core/
+│   ├── baselines/
+│   │   └── fedproto/
+│   │       ├── experiment_1/
+│   │       └── experiment_2/
+│   ├── experiments/
+│   │   └── static_vs_adaptive/
+│   ├── FedProto_experiment1/
+│   └── FedProtoVsPFTL_experiment2/
+│
+├── unseen_client/
+│   ├── binary/
+│   └── multiclass/
 │
 ├── scalability/
 │
-├── unseen_client/
+├── statistical_analysis/
 │
-├── utils/
+├── results/
+│   ├── phase_one/
+│   ├── phase_two/
+│   ├── scalability/
+│   └── unseen_client/
 │
-└── results/
+└── utils/
 ```
 
-> **Note:** This structure should be updated to match the final released implementation.
+---
+
+## Requirements
+
+The implementation uses Python and the following main packages:
+
+```text
+numpy
+pandas
+tensorflow
+scikit-learn
+grpcio
+protobuf
+matplotlib
+seaborn
+```
+
+Python standard-library packages such as `os`, `csv`, `pickle`, `threading`, `random`, `time`, `json`, `pathlib`, and `datetime` are also used but do not require separate installation.
 
 ---
 
@@ -492,86 +389,139 @@ PFTL/
 Clone the repository:
 
 ```bash
-git clone <REPOSITORY-URL>
+git clone https://github.com/AzizahAlq/PFTL.git
 cd PFTL
 ```
 
 Create a virtual environment:
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Install the required dependencies:
+Install the dependencies:
 
 ```bash
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
 ---
 
-## Running the Experiments
+## Running PFTL
 
-The exact execution commands depend on the final organization of the released code.
+PFTL uses a client-server architecture implemented with gRPC.
 
-A typical client–server experiment follows:
+The general execution procedure is:
 
-### 1. Start the Aggregator
+1. Start the corresponding aggregator/server.
+2. Start the participating clients.
+3. Allow the clients to perform local training.
+4. Exchange only the shared-layer parameters.
+5. Aggregate the received shared-layer parameters.
+6. Perform local-global personalization at each client.
+7. Evaluate the personalized candidate using the validation gate.
+8. Continue until the configured number of communication rounds is completed.
 
-```bash
-python server.py
-```
+Because the repository contains multiple experimental configurations, use the scripts in the corresponding Phase One, Phase Two, baseline, unseen-client, or scalability directory.
 
-### 2. Start the Clients
+---
 
-```bash
-python client.py
-```
+## Static vs Adaptive Experiment
 
-### 3. Run the Required Experimental Configuration
-
-Separate configurations can be provided for:
+The Phase Two static-versus-adaptive experiments are located under:
 
 ```text
-Phase One
-Phase Two
-Scalability
-Unseen-client transfer
-Baseline experiments
+phase_two/experiments/static_vs_adaptive/
 ```
 
-> The commands in this section should be replaced with the exact filenames and arguments from the released implementation.
+These experiments investigate the effect of using fixed γ coefficients compared with validation-driven adaptive γ values.
+
+---
+
+## FedProto Experiments
+
+Phase Two also contains experiments involving FedProto.
+
+These experiments are used to evaluate PFTL relative to prototype-based federated knowledge sharing under heterogeneous conditions.
+
+The corresponding code is located in the Phase Two experiment and baseline directories.
+
+---
+
+## Unseen-Client Evaluation
+
+The repository contains separate unseen-client experiments:
+
+```text
+unseen_client/
+├── binary/
+└── multiclass/
+```
+
+These experiments investigate whether shared-layer parameters learned during federation can provide useful transferable knowledge to clients that did not participate in the original federated training.
+
+The evaluation includes local standalone training and transfer-based configurations.
+
+---
+
+## Scalability
+
+Scalability experiments evaluate PFTL as the number of participating clients increases.
+
+The scalability evaluation investigates whether the compact shared-layer parameter exchange remains effective as the federation grows.
+
+Related code and results are organized under:
+
+```text
+scalability/
+results/scalability/
+```
+
+---
+
+## Statistical Analysis
+
+Statistical analyses associated with the experiments are provided under:
+
+```text
+statistical_analysis/
+```
+
+These analyses are used to evaluate the consistency and statistical significance of the experimental comparisons across clients and repeated runs.
 
 ---
 
 ## Reproducibility
 
-The experimental framework evaluates PFTL across several dimensions:
+The experimental framework evaluates PFTL across several dimensions, including:
 
-* predictive performance,
-* personalization,
-* feature-space heterogeneity,
-* model heterogeneity,
-* label-space heterogeneity,
-* non-IID distributions,
-* negative transfer,
-* unseen-client transfer,
-* communication efficiency,
-* scalability, and
-* robustness across multiple random seeds.
+- predictive performance,
+- personalization,
+- feature-space heterogeneity,
+- model heterogeneity,
+- label-space heterogeneity,
+- non-IID distributions,
+- negative transfer,
+- unseen-client transfer,
+- communication efficiency,
+- scalability, and
+- robustness across multiple random seeds.
 
-For exact experimental settings, preprocessing procedures, hyperparameters, and statistical analyses, please refer to the accompanying paper.
+Random seeds, experimental parameters, dataset preprocessing, and client configurations should be kept consistent when reproducing the reported experiments.
+
+For the complete experimental methodology and statistical analysis, please refer to the accompanying paper.
 
 ---
 
-## Important Scope Note
+## Scope
 
-PFTL is designed to address **heterogeneous and personalized federated knowledge transfer**.
+PFTL is designed to address heterogeneous and personalized federated knowledge transfer.
 
-The method does **not introduce a new privacy-preserving mechanism** such as differential privacy, secure aggregation, homomorphic encryption, or another cryptographic privacy protocol.
+The current framework does not introduce a new privacy-preserving mechanism such as differential privacy, secure aggregation, or homomorphic encryption.
 
-As in the standard federated-learning setting considered in this work, raw datasets remain local to the participating clients. The methodological contributions of PFTL concern **heterogeneity handling, personalized knowledge transfer, compact representation-level synchronization, validation-driven adaptation, communication efficiency, and robustness**.
+Raw data are not exchanged among participating clients during federated training. The primary methodological contributions concern heterogeneous collaboration, personalized knowledge transfer, shared-layer parameter exchange, validation-driven adaptation, communication efficiency, and robustness.
 
 ---
 
@@ -581,52 +531,46 @@ If you use PFTL or this implementation in your research, please cite the accompa
 
 ```bibtex
 @article{alqahtani2026pftl,
-  title   = {Personalized Federated Transfer Learning for Intrusion Detection
-             across Networks with Heterogeneous Feature Spaces,
-             Model Architectures, and Label Spaces},
-  author  = {Alqahtani, Azizah and
-             Aljoby, Walid and
-             Ragab, Mohamed and
-             Brik, Bouziane and
-             Felamban, Muhamad and
-             Helmy, Tarek},
-  year    = {2026}
+  title  = {Personalized Federated Transfer Learning for Intrusion Detection
+            across Networks with Heterogeneous Feature Spaces,
+            Model Architectures, and Label Spaces},
+  author = {Alqahtani, Azizah and
+            Aljoby, Walid and
+            Ragab, Mohamed and
+            Brik, Bouziane and
+            Felamban, Muhamad and
+            Helmy, Tarek},
+  year   = {2026}
 }
 ```
 
-The journal, volume, pages, and DOI should be added once the final bibliographic information is available.
+The final journal, volume, pages, and DOI information can be added when available.
 
 ---
 
 ## Authors
 
-**Azizah Alqahtani**
-King Fahd University of Petroleum & Minerals (KFUPM), Saudi Arabia
+Azizah Alqahtani  
+King Fahd University of Petroleum & Minerals (KFUPM), Saudi Arabia  
 Ministry of Education, Saudi Arabia
 
-**Walid Aljoby**
+Walid Aljoby  
 King Fahd University of Petroleum & Minerals (KFUPM), Saudi Arabia
 
-**Mohamed Ragab**
+Mohamed Ragab  
 Technology Innovation Institute, Abu Dhabi, United Arab Emirates
 
-**Bouziane Brik**
+Bouziane Brik  
 University of Sharjah, United Arab Emirates
 
-**Muhamad Felamban**
+Muhamad Felamban  
 King Fahd University of Petroleum & Minerals (KFUPM), Saudi Arabia
 
-**Tarek Helmy**
+Tarek Helmy  
 King Fahd University of Petroleum & Minerals (KFUPM), Saudi Arabia
-
----
-
-## License
-
-Please refer to the repository license for the terms governing use of the released source code.
 
 ---
 
 ## Acknowledgment
 
-This repository accompanies the research on **Personalized Federated Transfer Learning (PFTL)** for intrusion detection across clients with heterogeneous feature spaces, model architectures, label spaces, and data distributions.
+This repository accompanies the research on Personalized Federated Transfer Learning (PFTL) for intrusion detection across heterogeneous network environments.
